@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# Virtual environment
+venv/
+
+# Flask uploads
+static/uploads/
+
+# Log files
+*.log
+
+# Editor/IDE config
+.vscode/
+.idea/
+
+# MacOS system files
+.DS_Store
+
+# Pip cache or temp
+*.bak
+*.tmp

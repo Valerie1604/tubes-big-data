@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Klasifikasi Pneumonia Berdasarkan Citra X-Ray Dada</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #f5f5f5;
+            padding: 40px;
+            text-align: center;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        form {
+            background: white;
+            padding: 20px;
+            margin: auto;
+            width: 400px;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+        input[type="file"], button {
+            display: block;
+            margin: 15px auto;
+            width: 80%;
+            padding: 10px;
+            font-size: 16px;
+        }
+        img {
+            max-width: 300px;
+            margin-top: 20px;
+            border-radius: 10px;
+        }
+        .result-section {
+            background: white;
+            margin: 30px auto;
+            padding: 20px;
+            width: 500px;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+        .result-title {
+            font-size: 22px;
+            font-weight: bold;
+            color: #34495e;
+            margin-bottom: 10px;
+        }
+        .result-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .result-list li {
+            font-size: 18px;
+            padding: 8px 0;
+        }
+        .confidence {
+            color: #27ae60;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Klasifikasi Pneumonia Berdasarkan Citra X-Ray Dada</h1>
+
+    <form method="post" enctype="multipart/form-data">
+        <input type="file" name="image" accept="image/*" required>
+        <button type="submit">Prediksi</button>
+    </form>
+
+    {% if predictions %}
+        <div class="result-section">
+            <div class="result-title">Hasil Prediksi dari Semua Model:</div>
+            {% if image_path %}
+                <img src="{{ image_path }}" alt="Uploaded Image">
+            {% endif %}
+            <ul class="result-list">
+                {% for model, result in predictions.items() %}
+                    <li>
+                        <strong>{{ model }}:</strong>
+                        {% if result is string %}
+                            {{ result }}
+                        {% else %}
+                            {{ result.class }} 
+                            (<span class="confidence">{{ result.confidence }}</span>)
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    {% if error %}
+        <p style="color:red;">{{ error }}</p>
+    {% endif %}
+</body>
+</html>
